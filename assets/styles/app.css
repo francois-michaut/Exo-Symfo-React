@@ -1,9 +1,9 @@
 body {
     background-color: rgb(245, 237, 237);
 }
-.home__title, .users__title, .posts__title {
+.detail__title, .users__title{
     text-align: center;
-    margin: 20px;
+    margin: 50px;
 }
 
 .home__navbar  {
@@ -22,4 +22,9 @@ table {
 tr {
     text-align: center;
     margin: 32px;
+}
+
+button {
+    background-color: red;
+    color: white;
 }

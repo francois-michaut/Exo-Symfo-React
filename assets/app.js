@@ -13,7 +13,16 @@ import './bootstrap';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
-import Main from './components/Main';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Users from './components/Users';
+import Details from './components/Details';
 
-ReactDOM.render(<Router><Main /></Router>, document.getElementById('root'));
+ReactDOM.render(
+    <Router>
+        <Routes>
+                <Route path="/" element={<Users />} />
+                <Route path="/details/user/:id" element={<Details />} />
+
+        </Routes>
+    </Router>,
+    document.getElementById('root'));

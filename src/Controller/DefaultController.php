@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
+
+
 class DefaultController extends AbstractController
 {
     /**
@@ -22,16 +24,15 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/api/users", name="api_users")
+     * @Route("/api/users", name="api_users", methods={"GET"})
      */
-    public function getUsers(UsersRepository $repository, PersistenceManagerRegistry $doctrine, SerializerInterface $serializer): JsonResponse
+    public function getUsers(UsersRepository $repository, SerializerInterface $serializer): JsonResponse
     {
-        $repository = $doctrine->getRepository(Users::class);
 
         $users = $repository->findAll();
 
-        //    dump($users);
-        $jsonContent = $serializer->serialize($users, 'json');
+
+        $jsonContent = $serializer->serialize($users, 'json',['groups' => 'users:read']);
 
         $response = new JsonResponse();
 
@@ -42,5 +43,34 @@ class DefaultController extends AbstractController
 
 
         return $response;
+    }
+    /**
+     * @Route("api/user/detail/{id}", name="api_find_user", methods={"GET"})
+     */
+    public function getUserById($id, UsersRepository $repository, SerializerInterface $serializer): Response
+    {
+        $user = $repository->find($id);
+        $jsonContent = $serializer->serialize($user, 'json' ,['groups' => 'users:read']);
+        $response = new Response();
+
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin',  '*');
+
+        $response->setContent($jsonContent);
+
+        return $response;
+    }
+
+    /**
+     * @Route("/api/deleteUser/{slug}", name="api_delete_user")
+     */
+    public function deleteUser($slug)
+    {
+        
+        dump($slug);
+
+        // $response = 'Utilisateur détruit';
+
+        //  return $response;
     }
 }
