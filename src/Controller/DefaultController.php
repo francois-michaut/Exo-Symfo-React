@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Users;
 use App\Repository\UsersRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -44,6 +45,7 @@ class DefaultController extends AbstractController
 
         return $response;
     }
+
     /**
      * @Route("api/user/detail/{id}", name="api_find_user", methods={"GET"})
      */
@@ -51,6 +53,7 @@ class DefaultController extends AbstractController
     {
         $user = $repository->find($id);
         $jsonContent = $serializer->serialize($user, 'json' ,['groups' => 'users:read']);
+
         $response = new Response();
 
         $response->headers->set('Content-Type', 'application/json');
@@ -62,15 +65,27 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/api/deleteUser/{slug}", name="api_delete_user")
+     * @Route("/api/deleteUser/{id}", name="api_delete_user", methods="DELETE")
      */
-    public function deleteUser($slug)
+    public function deleteUser($id, UsersRepository $repository, EntityManagerInterface $em, SerializerInterface $serializer): JsonResponse
     {
-        
-        dump($slug);
+        $user = $repository->find($id);
 
-        // $response = 'Utilisateur détruit';
+        $em->remove($user);
+        $em->flush();
 
-        //  return $response;
+        $users = $repository->findAll();
+
+
+        $jsonContent = $serializer->serialize($users, 'json',['groups' => 'users:read']);
+
+        $response = new JsonResponse();
+
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin',  '*');
+
+        $response->setContent($jsonContent);
+
+         return $response;
     }
 }

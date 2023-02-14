@@ -43,7 +43,7 @@ class Users
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birthDate = null;
 
-    #[ORM\OneToMany(mappedBy: 'userId', targetEntity: Possessions::class)]
+    #[ORM\OneToMany(mappedBy: 'userId', targetEntity: Possessions::class, orphanRemoval: true)]
     #[Groups('users:read')]
     private Collection $possessions;
 

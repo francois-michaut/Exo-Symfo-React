@@ -6,11 +6,14 @@ class Users extends Component {
     constructor() {
         super();
         this.state = { users: []};
+        this.handleDeleteUser = this.handleDeleteUser.bind(this);
     }
     
     componentDidMount() {
         this.getUsers();
     }
+
+    
     
     getUsers() {
        axios.get(`http://localhost:8000/api/users`).then(users => {
@@ -19,11 +22,19 @@ class Users extends Component {
     }
 
     
+    
+
+    
      handleDeleteUser(evt) {
+        evt.preventDefault();
          let index = evt.target.value;
-         console.log(index);
          axios.delete(`http://localhost:8000/api/deleteUser/${index}`)
-               .then(response => { console.log(response)} )
+               .then(response => {
+                    this.setState({ users: response.data, loading: true})
+                    this.getUsers();
+
+                } )
+     
      }
 
 

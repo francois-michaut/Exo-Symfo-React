@@ -25,11 +25,11 @@ class Details extends Component {
 
             return (
                 <div>
-                    <h1 className='detail__title'>Détail de l'utilisateur : </h1>
+                    <h1 className='detail__title'>Détail de l'utilisateur : {this.state.user && this.state.user.firstname} {this.state.user && this.state.user.name} </h1>
                     {this.state.user && 
                         <div>
-                            <h2> Voici sa fiche de renseignements: </h2>
-                            <div>
+                            <h2 className='detail__subtitle'> Voici sa fiche de renseignements: </h2>
+                            <div className='detail__card'>
                                 <h3>Nom: {this.state.user.name}</h3>
                                 <h4>Prénom: {this.state.user.firstname}</h4>
                                 <h4>Adresse mail: {this.state.user.email}</h4>

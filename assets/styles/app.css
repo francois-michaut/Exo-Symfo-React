@@ -28,3 +28,15 @@ button {
     background-color: red;
     color: white;
 }
+.detail__card {
+    width: 1000px;
+    background-color:#8de1c5 ;
+    margin: 50px auto;
+    padding: 40px;
+    border: 8px solid black;
+    border-radius: 20px;
+}
+.detail__subtitle {
+    margin-left: 20px;
+    text-decoration: underline;
+}
