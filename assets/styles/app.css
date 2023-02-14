@@ -40,3 +40,9 @@ button {
     margin-left: 20px;
     text-decoration: underline;
 }
+.btn {
+    margin-left: 20px;
+}
+.btn a {
+    color: white;
+}

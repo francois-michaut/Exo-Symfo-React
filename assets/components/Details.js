@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class Details extends Component {
     constructor() {
@@ -21,11 +22,12 @@ class Details extends Component {
     }
 
         render() {
-        console.log(this.state.index);
-
             return (
                 <div>
-                    <h1 className='detail__title'>Détail de l'utilisateur : {this.state.user && this.state.user.firstname} {this.state.user && this.state.user.name} </h1>
+                    <div className='detail__header'>
+                        <h1 className='detail__title '>Détail de l'utilisateur : {this.state.user && this.state.user.firstname} {this.state.user && this.state.user.name} </h1>
+                        <button type='button' className='btn btn-success'><Link className='link-secondary' to={`/`}>Retour à l'accueil</Link></button>
+                    </div>
                     {this.state.user && 
                         <div>
                             <h2 className='detail__subtitle'> Voici sa fiche de renseignements: </h2>
