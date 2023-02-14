@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Modal from './Modal';
 
 class Users extends Component {
     constructor() {
         super();
-        this.state = { users: []};
+        this.state = { users: [], isOpen: false};
         this.handleDeleteUser = this.handleDeleteUser.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
     }
     
     componentDidMount() {
@@ -17,7 +19,7 @@ class Users extends Component {
     
     getUsers() {
        axios.get(`http://localhost:8000/api/users`).then(users => {
-           this.setState({ users: users.data, loading: false})
+           this.setState({ users: users.data, loading: false, isOpen: false, setIsOpen: false})
        })
     }
 
@@ -35,6 +37,11 @@ class Users extends Component {
 
                 } )
      
+     }
+
+     toggleModal() {
+        console.log('bouton modal cliqué');
+        this.setState({isOpen: true});
      }
 
 
@@ -76,6 +83,12 @@ class Users extends Component {
                         
                     </tbody>
                 </table>
+                <div className='users__addUser'>
+                    <button type='button' className='users__addUser--button btn btn-success' onClick={this.toggleModal} >
+                        Ajouter un utilisateur
+                    </button>
+                    {this.state.isOpen && <Modal />}
+                </div>
             </div>
         )
     }

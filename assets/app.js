@@ -16,12 +16,14 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Users from './components/Users';
 import Details from './components/Details';
+import Modal from './components/Modal';
 
 ReactDOM.render(
     <Router>
         <Routes>
                 <Route path="/" element={<Users />} />
                 <Route path="/details/user/:id" element={<Details />} />
+                {/* <Route path="/modal" element={<Modal />} /> */}
 
         </Routes>
     </Router>,

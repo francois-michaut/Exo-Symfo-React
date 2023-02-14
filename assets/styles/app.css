@@ -46,3 +46,38 @@ button {
 .btn a {
     color: white;
 }
+.users__addUser {
+    width: 50%;
+    margin: 40px auto;
+}
+.users__addUser--button {
+    margin: 10px auto;
+}
+.formAddUser {
+    background-color: #1e7c7c;
+    height: 600px;
+    width: 1200px;
+    z-index: 2;
+    position: absolute;
+    top: 10px;
+    padding: 20px;
+    margin: 10px auto;
+    margin-left: -20px;
+}
+ form {
+    display: flex;
+    flex-direction: column;
+}
+span {
+    display: inline-block;
+    min-width: 100px;
+}
+label {
+    margin-top: 50px;
+}
+.form__button {
+    width: 180px;
+    height: 30px;
+    margin: 20px auto;
+    border-radius: 20px;
+}
