@@ -40,19 +40,14 @@ class Modal extends Component {
     }
     handleSubmit(evt) {
         evt.preventDefault();
-        // const user = {
-        //     "name": this.state.name,
-        //     "firstname": this.state.firstname,
-        //     "email": this.state.email,
-        //     "adresse": this.state.adresse,
-        //     "phone": this.state.phone
-        // }
+      
         axios.post(`http://localhost:8000/api/addUser`,
-                    JSON.stringify({"name": this.state.name,
-                    "firstname": this.state.firstname,
-                    "email": this.state.email,
-                    "adresse": this.state.adresse,
-                    "phone": this.state.phone
+                    JSON.stringify(
+                        {"name": this.state.name,
+                        "firstname": this.state.firstname,
+                        "email": this.state.email,
+                        "adresse": this.state.adresse,
+                        "telephone": this.state.phone
                     }))
         .then((response) => {console.log(response.data)});
         this.setState({isOpen: false});
