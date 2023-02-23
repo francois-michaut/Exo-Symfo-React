@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import Modal from './Modal';
 
 class Users extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = { users: [], isOpen: false};
         this.handleDeleteUser = this.handleDeleteUser.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
@@ -40,8 +40,7 @@ class Users extends Component {
      }
 
      toggleModal() {
-        console.log('bouton modal cliqué');
-        this.setState({isOpen: true});
+        this.state.isOpen ? this.setState({isOpen: false}) : this.setState({isOpen: true});
      }
 
 

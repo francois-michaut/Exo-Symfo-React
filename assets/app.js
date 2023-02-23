@@ -23,7 +23,7 @@ ReactDOM.render(
         <Routes>
                 <Route path="/" element={<Users />} />
                 <Route path="/details/user/:id" element={<Details />} />
-                {/* <Route path="/modal" element={<Modal />} /> */}
+                <Route path="/" element={<Modal />} /> 
 
         </Routes>
     </Router>,

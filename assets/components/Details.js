@@ -16,7 +16,6 @@ class Details extends Component {
     getUser(){
         axios.get(`http://localhost:8000/api/user/detail/${this.state.index}`)
             .then(user => {
-                console.log(user.data);
                 this.setState({user: user.data});
             })
     }

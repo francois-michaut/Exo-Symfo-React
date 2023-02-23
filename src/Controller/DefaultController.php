@@ -6,8 +6,10 @@ use App\Entity\Users;
 use App\Repository\UsersRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -87,5 +89,32 @@ class DefaultController extends AbstractController
         $response->setContent($jsonContent);
 
          return $response;
+    }
+
+    /**
+     * @Route("/api/addUser", name="api_add_user", methods="POST")
+     */
+    public function addUser(EntityManagerInterface $em, Request $request, SerializerInterface $serializer): Response
+    {
+       try{
+            // $user = $serializer->deserialize($request->getContent(), Users::class, 'json');
+            $user = $request->getContent();
+            $user = $serializer->deserialize($user, Users::class, 'json');
+            $em->persist($user);
+            $em->flush();
+       }
+       catch(Exception $e) {
+        return $this->json(
+            "JSON mal formé",
+            Response::HTTP_UNPROCESSABLE_ENTITY
+        );
+       }
+      
+        // dd($user);
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin',  '*');
+        return $response->setContent('utlisateur créé');
+
     }
 }
