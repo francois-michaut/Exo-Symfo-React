@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+
 use App\Repository\UsersRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -41,12 +42,15 @@ class Users
     private ?string $telephone = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Groups('users:read')]
     private ?\DateTimeInterface $birthDate = null;
 
     #[ORM\OneToMany(mappedBy: 'userId', targetEntity: Possessions::class, orphanRemoval: true)]
     #[Groups('users:read')]
     private Collection $possessions;
 
+    #[Groups('users:read')]
+    private ?string $age = null;
     public function __construct()
     {
         $this->possessions = new ArrayCollection();
@@ -155,6 +159,30 @@ class Users
                 $possession->setUserId(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * Get the value of age
+     *
+     * @return string
+     */
+    public function getAge(): string
+    {
+        return $this->age;
+    }
+
+    /**
+     * Set the value of age
+     *
+     * @param string $age
+     *
+     * @return self
+     */
+    public function setAge(string $age): self
+    {
+        $this->age = $age;
 
         return $this;
     }

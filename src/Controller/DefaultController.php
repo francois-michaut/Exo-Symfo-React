@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Users;
 use App\Repository\UsersRepository;
+use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 use Exception;
@@ -29,12 +30,15 @@ class DefaultController extends AbstractController
     /**
      * @Route("/api/users", name="api_users", methods={"GET"})
      */
-    public function getUsers(UsersRepository $repository, SerializerInterface $serializer): JsonResponse
+    public function getUsers(UsersRepository $repository, SerializerInterface $serializer, UserService $age): JsonResponse
     {
 
         $users = $repository->findAll();
 
-
+       foreach($users as $user) {
+        $user->setAge($age->getAgeOfUser(($user)));
+       }
+        
         $jsonContent = $serializer->serialize($users, 'json',['groups' => 'users:read']);
 
         $response = new JsonResponse();
@@ -97,7 +101,6 @@ class DefaultController extends AbstractController
     public function addUser(EntityManagerInterface $em, Request $request, SerializerInterface $serializer): Response
     {
        try{
-            // $user = $serializer->deserialize($request->getContent(), Users::class, 'json');
             $user = $request->getContent();
             $user = $serializer->deserialize($user, Users::class, 'json');
             $em->persist($user);
@@ -110,10 +113,10 @@ class DefaultController extends AbstractController
         );
        }
       
-        // dd($user);
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
         $response->headers->set('Access-Control-Allow-Origin',  '*');
+        
         return $response->setContent('utlisateur créé');
 
     }

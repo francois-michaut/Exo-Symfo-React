@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Modal from './Modal';
@@ -15,11 +15,13 @@ class Users extends Component {
         this.getUsers();
     }
 
-    
-    
+    useEffect() {
+        console.log('composanrt mis à jour');
+    }
     getUsers() {
        axios.get(`http://localhost:8000/api/users`).then(users => {
-           this.setState({ users: users.data, loading: false, isOpen: false, setIsOpen: false})
+            console.log(users.data);
+           this.setState({ users: users.data})
        })
     }
 
@@ -41,6 +43,7 @@ class Users extends Component {
 
      toggleModal() {
         this.state.isOpen ? this.setState({isOpen: false}) : this.setState({isOpen: true});
+        this.getUsers();
      }
 
 
@@ -57,6 +60,7 @@ class Users extends Component {
                             <th scope="col">Email</th>
                             <th scope="col">Adresse</th>
                             <th scope="col">Téléphone</th>
+                            <th scope="col">Age</th>
                             <th scope="col">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16" >
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
@@ -74,6 +78,7 @@ class Users extends Component {
                                 <td>{user.email}</td>
                                 <td>{user.adresse}</td>
                                 <td>{user.telephone}</td>
+                                <td>{user.age} ans</td>
                                 <td><button type="button" value={user.id} onClick={this.handleDeleteUser}>
                                         Supprimer
                                     </button></td> 

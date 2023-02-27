@@ -6,13 +6,15 @@ import '../styles/app.css';
 class Modal extends Component {
     constructor(props) {
         super(props);
-        this.state = {name:'', firstname:'', email:'', adresse:'', phone:'', isOpen: true};
+        this.state = {name:'', firstname:'', email:'', adresse:'', phone:'', birthdate: '', isOpen: true};
 
         this.handleChangeName = this.handleChangeName.bind(this);
         this.handleChangeFirstname = this.handleChangeFirstname.bind(this);
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangeAdresse = this.handleChangeAdresse.bind(this);
         this.handleChangePhone = this.handleChangePhone.bind(this);
+        this.handleChangeBirthdate = this.handleChangeBirthdate.bind(this);
+
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -38,6 +40,12 @@ class Modal extends Component {
     handleChangePhone(event) {
         this.setState({phone: event.target.value});
     }
+
+    handleChangeBirthdate(event) {
+        console.log(event.target.value);
+        this.setState({birthdate: event.target.value});
+      
+    }
     handleSubmit(evt) {
         evt.preventDefault();
       
@@ -47,7 +55,8 @@ class Modal extends Component {
                         "firstname": this.state.firstname,
                         "email": this.state.email,
                         "adresse": this.state.adresse,
-                        "telephone": this.state.phone
+                        "telephone": this.state.phone,
+                        "birthDate": this.state.birthdate
                     }))
         .then((response) => {console.log(response.data)});
         this.setState({isOpen: false});
@@ -79,6 +88,10 @@ class Modal extends Component {
                         <label>
                             <span>Téléphone :</span>
                             <input type="text" name="phone" value={this.state.phone} onChange={this.handleChangePhone} />
+                        </label>
+                        <label>
+                            <span>Date de naissance :</span>
+                            <input type="date" name="birthdate" value={this.state.birthdate} onChange={this.handleChangeBirthdate} />
                         </label>
                         <button className="form__button" type="submit" value="Envoyer">Envoyer</button>
                     </form>
